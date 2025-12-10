@@ -33,12 +33,51 @@ function shuffleCards(array) {
     return shuffled
 }
 
+function createCard(card) {
+    const cardElement = document.createElement("div")
+    cardElement.className = "card"
+
+    // Cria o elemento do emoji
+    const emoji = document.createElement("span")
+    emoji.className = "card-emoji"
+    emoji.textContent = card.content
+
+    // Adiciona o emoji ao card
+    cardElement.appendChild(emoji)
+
+    // Adiciona o evento de clique na carta.
+    cardElement.addEventListener("click", () => handleCardClick(cardElement, card))
+  
+
+    return cardElement
+}
+
 function renderCards() {
     const deck = document.getElementById("deck")
     deck.innerHTML = ""
 
     const cards = shuffleCards(cardItems)
-    cards.forEach((item) => console.log(item))
+    cards.forEach((item) => {
+
+    const cardElement = createCard(item)
+    deck.appendChild(cardElement)
+
+    })
+}
+
+function handleCardClick(cardElement, card) {
+    // Revela a carta
+    cardElement.classList.add("revealed")
+
+    // Adiciona no Array as cartas viradas,
+    flippedCards.push({cardElement, card})
+
+    // Verifica se é a segunda carta viradada.
+    if (flippedCards.length === 2){
+        console.log("2 cartas viradas")
+    } else {
+        console.log("Mais carta!")
+    }
 }
 
 renderCards()
