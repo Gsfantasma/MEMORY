@@ -14,8 +14,9 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
-.game.container {
+.game-container {
     min-width: 544px;
+    max-width: 544px;
     font-size: 16px;
 }
 

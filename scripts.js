@@ -68,7 +68,7 @@ function renderCards() {
 function handleCardClick(cardElement, card) {
     if(
         isCheckingPair || // Ignora clique enquanto verifica o par
-        cardElement.classList.catains("revealed") // Ignora o clique se a carta já está virada.
+        cardElement.classList.contains("revealed") // Ignora o clique se a carta já está virada.
        ) { 
         return
     }
@@ -81,7 +81,11 @@ function handleCardClick(cardElement, card) {
 
     // Verifica se é a segunda carta viradada.
     if (flippedCards.length === 2){
+        // Atualiza para verdadeiro para sinalizar que vamos verificar o par
         isCheckingPair = true
+
+        // Incrementa o contador de tentativas
+        attempts++
 
         const [firstCard, secondCard] = flippedCards
         
@@ -89,15 +93,17 @@ function handleCardClick(cardElement, card) {
         if (firstCard.card.content === secondCard.card.content) {
             // Incrementa os pares encontrados
             matchedPairs++
-
-        } else {
-            setTimeout(() =>{
-                firstCardElement.classeList.remove("revealed")
-            secondCardElement.classList.remove("revealed")
             flippedCards = []
             isCheckingPair = false
+        } else {
+            setTimeout(() => {
+                firstCard.cardElement.classList.remove("revealed")
+                secondCard.cardElement.classList.remove("revealed")
+                flippedCards = []
+                isCheckingPair = false
             }, 1000)
         }
+
         updateStatus()
        
     }
