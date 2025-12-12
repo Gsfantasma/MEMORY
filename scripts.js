@@ -91,13 +91,24 @@ function handleCardClick(cardElement, card) {
     if (firstCard.card.content === secondCard.card.content) {
       // Incrementa os pares encontrados
       matchedPairs++;
-
+     
       // Marca as cartas como encontradas.
       cardItems.forEach((item) => {
         if (item.content === firstCard.card.content) {
           item.matched = true;
         }
       });
+
+      // Limpa Array de cartas viradas.
+      flippedCards = [];
+
+      // Libera a próxima rodada
+      isCheckingPair = false;
+
+      // Atualiza o placar
+      updateStats();
+
+
       // Verifica se tem itens para econtrar
       const toFind = cardItems.find((item) => item.matched === false);
 
@@ -110,13 +121,9 @@ function handleCardClick(cardElement, card) {
         secondCard.cardElement.classList.remove("revealed");
         flippedCards = [];
         isCheckingPair = false;
+        updateStats();
       }, 1000);
     }
-
-    flippedCards = [];
-    isCheckingPair = false;
-    updateStats();
-    console.log(cardItems);
   }
 }
 
